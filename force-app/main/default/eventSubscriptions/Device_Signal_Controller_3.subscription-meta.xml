@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventSubscription xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <eventType>Device_Signal__e</eventType>
+    <referenceData>Device_Signal_Controller_3</referenceData>
+</EventSubscription>

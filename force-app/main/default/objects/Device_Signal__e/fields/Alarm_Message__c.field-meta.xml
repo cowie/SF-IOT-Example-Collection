@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alarm_Message__c</fullName>
+    <description>Long form &#39;message&#39; from the device. Could hold a JSON payload to be processed, could be the actual message, etc. Key is that it would require some form of preprocessing before it could be used in declarative logic.</description>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Alarm Message</label>
+    <length>131072</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

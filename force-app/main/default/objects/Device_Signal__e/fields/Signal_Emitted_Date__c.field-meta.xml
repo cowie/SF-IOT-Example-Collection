@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Signal_Emitted_Date__c</fullName>
+    <defaultValue>NOW()</defaultValue>
+    <description>Date/time for the signal to have been emitted from the device. This could be slightly different from createdDate on the event if there was a delay, etc. Defaults to NOW()</description>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Signal Emitted Date</label>
+    <required>true</required>
+    <type>DateTime</type>
+</CustomField>

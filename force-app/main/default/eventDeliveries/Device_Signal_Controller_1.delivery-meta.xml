@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EventDelivery xmlns="http://soap.sforce.com/2006/04/metadata">
+    <eventParameters>
+        <parameterName>FlowVersionName</parameterName>
+        <parameterValue>Device_Signal_Controller-1</parameterValue>
+    </eventParameters>
+    <eventSubscription>Device_Signal_Controller_1</eventSubscription>
+    <referenceData>Device_Signal_Controller_1</referenceData>
+    <type>StartFlow</type>
+</EventDelivery>
