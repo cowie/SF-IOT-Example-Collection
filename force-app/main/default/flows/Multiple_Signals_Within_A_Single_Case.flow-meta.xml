@@ -1,8 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Add_Exception_To_List_For_Insert</name>
+        <label>Add Exception To List For Insert</label>
+        <locationX>657</locationX>
+        <locationY>988</locationY>
+        <assignmentItems>
+            <assignToReference>varListExceptionRecords</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varLoopDeviceException</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Exception_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Signal_To_List</name>
+        <label>Add Signal To List</label>
+        <locationX>280</locationX>
+        <locationY>200</locationY>
+        <assignmentItems>
+            <assignToReference>varListDeviceSignals</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_for_FINISH_Signal</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Start_Signal_to_Signal_List</name>
+        <label>Add Start Signal to Signal List</label>
+        <locationX>421</locationX>
+        <locationY>50</locationY>
+        <assignmentItems>
+            <assignToReference>varListDeviceSignals</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Start_Time</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Create_Restart_Case</name>
+        <label>Create Restart Case</label>
+        <locationX>278</locationX>
+        <locationY>626</locationY>
+        <assignmentItems>
+            <assignToReference>varNewCase.AssetId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAssetID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNewCase.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>INFO - System Restarted Successfully</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_Case_For_Events</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Create_Signal_Record_For_List</name>
+        <label>Create Signal Record For List</label>
+        <locationX>255</locationX>
+        <locationY>50</locationY>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.Alarm_Message__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalAlarmMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.AlarmID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalAlarmID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.DeviceID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalDeviceID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.Measure_1__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalMeasure1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.Measure_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalMeasure2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.Signal_Emitted_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalEmittedDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceSignal.Signal_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varSignalType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Start_Signal_to_Signal_List</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Create_Timeout_Case</name>
+        <label>Create Timeout Case</label>
+        <locationX>576</locationX>
+        <locationY>623</locationY>
+        <assignmentItems>
+            <assignToReference>varNewCase.AssetId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAssetID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNewCase.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TIMEOUT ON SYSTEM RESTART</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNewCase.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_Case_For_Events</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Start_Time</name>
+        <label>Set Start Time</label>
+        <locationX>575</locationX>
+        <locationY>50</locationY>
+        <assignmentItems>
+            <assignToReference>varPauseTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Pause_and_await_finish_signal</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Translate_Info_Signal_to_Exception</name>
+        <label>Translate Info Signal to Exception</label>
+        <locationX>659</locationX>
+        <locationY>847</locationY>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Alarm_Message__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.Alarm_Message__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.AlarmID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.AlarmID__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Asset__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAssetID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.DeviceID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.DeviceID__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Measure_1__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.Measure_1__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Measure_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.Measure_2__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Signal_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.Signal_Type__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varNewCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLoopDeviceException.Signal_Emitted_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varLoopDeviceSignal.Signal_Emitted_Date__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Exception_To_List_For_Insert</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>constFinishSignalMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SYSTEM-LIVE</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Check_for_FINISH_Signal</name>
+        <label>Check for FINISH Signal</label>
+        <locationX>272</locationX>
+        <locationY>439</locationY>
+        <defaultConnector>
+            <targetReference>Pause_and_await_finish_signal</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Interim signal, reloop</defaultConnectorLabel>
+        <rules>
+            <name>Signal_is_Finish_Signal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varLoopDeviceSignal.Alarm_Message__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>constFinishSignalMessage</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Restart_Case</targetReference>
+            </connector>
+            <label>Signal is Finish Signal</label>
+        </rules>
+    </decisions>
     <description>Alright, so let&#39;s say there&#39;s a known pattern of signals that are invariably linked. The simplest to understand would be a system reset. You get the INFO signal that a restart has occurred, followed by INFO signals telling you that individual services are restarting, ending with an INFO signal telling you that the system status is live again. We need a system to capture ALL of these signals, and logically group them under a single case to be reviewed by an agent. We&#39;ll do this using the Pause/Resume feature within Flow as a means to track state. It&#39;s important to note - you do risk limits with this, you can only have some 50k interviews paused at a time, but we obv won&#39;t hit that here.</description>
     <interviewLabel>Multiple Signals Within A Single Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Multiple Signals Within A Single Case</label>
+    <loops>
+        <name>Create_Exception_Records</name>
+        <label>Create Exception Records</label>
+        <locationX>439</locationX>
+        <locationY>929</locationY>
+        <assignNextValueToReference>varLoopDeviceSignal</assignNextValueToReference>
+        <collectionReference>varListDeviceSignals</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Translate_Info_Signal_to_Exception</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Insert_Exceptions_For_Case</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -16,7 +310,32 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <status>InvalidDraft</status>
+    <recordCreates>
+        <name>Insert_Case_For_Events</name>
+        <label>Insert Case For Events</label>
+        <locationX>438</locationX>
+        <locationY>774</locationY>
+        <connector>
+            <targetReference>Create_Exception_Records</targetReference>
+        </connector>
+        <inputReference>varNewCase</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Insert_Exceptions_For_Case</name>
+        <label>Insert Exceptions For Case</label>
+        <locationX>438</locationX>
+        <locationY>1107</locationY>
+        <inputReference>varListExceptionRecords</inputReference>
+    </recordCreates>
+    <startElementReference>Create_Signal_Record_For_List</startElementReference>
+    <status>Draft</status>
+    <variables>
+        <name>varAssetID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>varDeviceAssetRecord</name>
         <dataType>SObject</dataType>
@@ -26,12 +345,45 @@
         <objectType>Asset</objectType>
     </variables>
     <variables>
-        <name>varExceptionRecord</name>
+        <name>varFinishDeviceSignal</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Device_Signal__e</objectType>
+    </variables>
+    <variables>
+        <name>varListDeviceSignals</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Device_Signal__e</objectType>
+    </variables>
+    <variables>
+        <description>All exception records post Start signal, including Finish signal, to be added to the db</description>
+        <name>varListExceptionRecords</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Device_Exception__c</objectType>
+    </variables>
+    <variables>
+        <name>varLoopDeviceException</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Device_Exception__c</objectType>
+    </variables>
+    <variables>
+        <name>varLoopDeviceSignal</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Device_Signal__e</objectType>
     </variables>
     <variables>
         <name>varNewCase</name>
@@ -40,6 +392,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>varPauseTime</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Flow.CurrentDateTime</elementReference>
+        </value>
     </variables>
     <variables>
         <name>varSignalAlarmID</name>
@@ -98,4 +460,65 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
+    <variables>
+        <name>varStartSignalException</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Device_Exception__c</objectType>
+    </variables>
+    <waits>
+        <name>Pause_and_await_finish_signal</name>
+        <label>Pause and await finish signal</label>
+        <locationX>575</locationX>
+        <locationY>208</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>Signal_heard_Process</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Add_Signal_To_List</targetReference>
+            </connector>
+            <eventType>Device_Signal__e</eventType>
+            <inputParameters>
+                <name>DeviceID__c</name>
+                <value>
+                    <elementReference>varSignalDeviceID</elementReference>
+                </value>
+            </inputParameters>
+            <label>Signal heard - Process</label>
+            <outputParameters>
+                <assignToReference>varLoopDeviceSignal</assignToReference>
+                <name>Device_Signal__e</name>
+            </outputParameters>
+        </waitEvents>
+        <waitEvents>
+            <name>Timeout_on_finish_signal</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Create_Timeout_Case</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>varPauseTime</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>Timeout on finish signal</label>
+        </waitEvents>
+    </waits>
 </Flow>

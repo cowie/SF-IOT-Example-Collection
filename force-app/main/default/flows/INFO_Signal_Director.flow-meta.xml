@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <assignments>
-        <name>Set_something_to_something</name>
-        <label>Set something to something</label>
-        <locationX>300</locationX>
-        <locationY>62</locationY>
-        <assignmentItems>
-            <assignToReference>varSignalAlarmID</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>bob</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
+    <constants>
+        <description>String for message to denote the start of the boxcar usecase</description>
+        <name>constBoxcarStartSignal</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SYSTEM-RESTART</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Traffic_Cop</name>
+        <label>Traffic Cop</label>
+        <locationX>262</locationX>
+        <locationY>52</locationY>
+        <defaultConnector>
+            <targetReference>Check_Measures_For_Exceptions</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Standard INFO Message</defaultConnectorLabel>
+        <rules>
+            <name>Signal_is_Restart_Message</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varSignalAlarmMessage</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>constBoxcarStartSignal</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Kick_off_Restart_Logic</targetReference>
+            </connector>
+            <label>Signal is Restart Message</label>
+        </rules>
+        <rules>
+            <name>Device_is_mid_restart</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAssetStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Down</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Device is mid-restart</label>
+        </rules>
+    </decisions>
     <description>A &#39;parent&#39; flow to multiple subflows to handle the different types of scenarios for INFO signals that get processed.</description>
     <interviewLabel>INFO Signal Director {!$Flow.CurrentDateTime}</interviewLabel>
     <label>INFO Signal Director</label>
@@ -29,8 +61,102 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <startElementReference>Set_something_to_something</startElementReference>
-    <status>Active</status>
+    <startElementReference>Traffic_Cop</startElementReference>
+    <status>Draft</status>
+    <subflows>
+        <name>Check_Measures_For_Exceptions</name>
+        <label>Check Measures For Exceptions</label>
+        <locationX>424</locationX>
+        <locationY>308</locationY>
+        <flowName>INFO_Measures_Checker</flowName>
+    </subflows>
+    <subflows>
+        <name>Kick_off_Restart_Logic</name>
+        <label>Kick off Restart Logic</label>
+        <locationX>160</locationX>
+        <locationY>309</locationY>
+        <flowName>Multiple_Signals_Within_A_Single_Case</flowName>
+        <inputAssignments>
+            <name>varAssetID</name>
+            <value>
+                <elementReference>varAssetID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varDeviceAssetRecord</name>
+            <value>
+                <elementReference>varDeviceAssetRecord</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalAlarmID</name>
+            <value>
+                <elementReference>varSignalAlarmID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalAlarmMessage</name>
+            <value>
+                <elementReference>varSignalAlarmMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalDeviceID</name>
+            <value>
+                <elementReference>varSignalDeviceID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalEmittedDate</name>
+            <value>
+                <elementReference>varSignalEmittedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalMeasure1</name>
+            <value>
+                <elementReference>varSignalMeasure1</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalMeasure2</name>
+            <value>
+                <elementReference>varSignalMeasure2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varSignalType</name>
+            <value>
+                <elementReference>varSignalType</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>varAssetID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Asset record&#39;s status - allows us to identify if system is down, so we can retain INFO until system live again.</description>
+        <name>varAssetStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Boolean to track if this record should be saved</description>
+        <name>varBoolSaveRecord</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>varDeviceAssetRecord</name>
         <dataType>SObject</dataType>

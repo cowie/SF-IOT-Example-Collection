@@ -14,11 +14,11 @@ Goal here is to provide you with a somewhat bare bones / baseline IoT 'implement
 Ok, so this is a simple one. Basically if a device signal comes in with the signal type of 'ALARM', we need to associate the signal to an asset(device) record, and create a case for it for someone to deal with. We'll also create that exception record and tie it to the case so the agent knows what's up.
 #### Multiple Warnings Within Time Period
 Getting a bit more fun. If we get a WARN signal type, we don't want to necessarily create a case. We've created a requirement that 3 WARN signals within a 1 hour span means we need to investigate. So we'll use this to show using the Database as the state for the flow, and simply check the status of the device as it stands. We'll store every WARN as an exception event to simplify things, which would be fairly easy to run a scheduled process to clean out any not associated with a case nightly if you wanted to keep storage costs down. Additionally this flow will show the usage of Constants as a way to keep things more managable when changing/maintaining these going forward. 
-#### (TBD) Multiple Signals Within A Single Case
+#### Multiple Signals Within A Single Case
 Alright, so let's say there's a known pattern of signals that are invariably linked. The simplest to understand would be a system reset. You get the INFO signal that a restart has occurred, followed by INFO signals telling you that individual services are restarting, ending with an INFO signal telling you that the system status is live again. We need a system to capture ALL of these signals, and logically group them under a single case to be reviewed by an agent. We'll do this using the Pause/Resume feature within Flow as a means to track state. It's important to note - you do risk limits with this, you can only have some 50k interviews paused at a time, but we obv won't hit that here.
-#### (TBD) Rapid Escalation Of Measures (Show Invoked Methods)
-We've two generic "Measure" fields on our Event. What we want to do is identify thresholds for Measure 1, which is a fairly simplistic exercise, and then 
-for Measure 2, we want to detect rapid escalation in order to pro-actively identify a problem.
+#### (Partially Built) Escalation Of Measures 
+We've two generic "Measure" fields on our Event. What we want to do is identify thresholds for Measure 1, which is a fairly simplistic exercise. Measure 2 however is TBD, what we'd like to do is identify a rapid escalation of Measure 2, in order to proactively identify a threat. I'm thinking this might be a good place to store EVERY signal into BigObjects, and we simply ping that as needed. Index would then be DeviceID x PE EventID, so you fetch the last n Events, show the progression, and move on.
+
 #### (If there's time) Keep-alive signal tracking
 TBD
 
@@ -26,7 +26,6 @@ TBD
 
 ## TODO
 * Build a data script to add a few accounts, contacts, and assets into the mix.
-* Build out Boxcaring scenario
 * Build out Rapid Escalation Scenario
 
 ## Description of Files and Directories
