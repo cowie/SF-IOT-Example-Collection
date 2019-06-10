@@ -1,0 +1,17 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Asset",
+                "referenceId": "AssetRef1"
+            },
+            "Name": "Test Asset",
+            "AccountId": "@AccountRef11",
+            "IsCompetitorProduct": false,
+            "ContactId": "@ContactRef19",
+            "DeviceID__c": "abc123",
+            "IsInternal": false,
+            "SerialNumber": "abc123"
+        }
+    ]
+}

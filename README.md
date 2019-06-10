@@ -36,6 +36,12 @@ TBD
 ##### Potential Ugly Bits
 ## Dev, Build and Test
 
+* `git clone`
+* Create yourself a scratch org.
+* `sfdx force:source:push`
+* `sfdx force:user:permset:assign -n Generic_IOT_User`
+* `sfdx force:data:tree:import -p DummyData/Acct-Cont-Oppy-Case-Asset-plan.json`
+
 ## TODO
 * Build a data script to add a few accounts, contacts, and assets into the mix.
   * Use the default data set, then add

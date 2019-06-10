@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Alarm_Type__c</field>
+                <field>Signal_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
