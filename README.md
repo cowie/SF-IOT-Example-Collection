@@ -44,6 +44,11 @@ TBD
 
 This will give you the org, perms, and a super minimal dataset with a single Asset with Device Id 'ABC123'. You can now fire events to your org's Device_Signal__e to test out the catchers.
 
+### How to test the usecases
+* Simple Case Call - Set your Device_Signal__e's record value for 'Signal_Type__c' to 'ALARM'.
+* Multiple Warnings - Set your Device_Signal__e's record value for 'Signal_Type__c' to 'WARN'. Fire 3 within a 1h span for the same Asset ('DeviceID__c' on the Event should match an Asset record's value for 'DeviceID__c').
+* Multiple Signals within Single Case - Set your Device_Signal__e's record value for 'Signal_Type__c' to 'INFO'. Fire other signals to the same Asset ('DeviceID__c' on the Event should match an Asset record's value for 'DeviceID__c'). Fire another with 'Signal_Type__c' as 'INFO'.
+
 ## TODO
 Yell at Pete or someone to test this lol.
 
@@ -52,3 +57,4 @@ Yell at Pete or someone to test this lol.
 force-app/ - the source
 DummyData/ - simple data to get started with.
 ## Issues
+I mean, I think I've a lot of them when you really break it down, but that's not appropriate for a readme.
