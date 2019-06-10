@@ -42,12 +42,13 @@ TBD
 * `sfdx force:user:permset:assign -n Generic_IOT_User`
 * `sfdx force:data:tree:import -p DummyData/Acct-Cont-Oppy-Case-Asset-plan.json`
 
+This will give you the org, perms, and a super minimal dataset with a single Asset with Device Id 'ABC123'. You can now fire events to your org's Device_Signal__e to test out the catchers.
+
 ## TODO
-* Build a data script to add a few accounts, contacts, and assets into the mix.
-  * Use the default data set, then add
-    * Insert Assets: Insert device assets
+Yell at Pete or someone to test this lol.
 
 
 ## Description of Files and Directories
-
+force-app/ - the source
+DummyData/ - simple data to get started with.
 ## Issues
